@@ -1,16 +1,14 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
 import edu.princeton.cs.algs4.StdRandom;
 
-import javax.naming.OperationNotSupportedException;
 
 public class RandomizedQueue<Item> implements Iterable<Item> {
     private int size;
     private Item[] rq;
     public RandomizedQueue()                 // construct an empty randomized queue
     {
-        rq = (Item[]) (new Object[1]);
+        rq = (Item[])(new Object[1]);
     }
 
     public boolean isEmpty()                 // is the queue empty?
@@ -51,7 +49,10 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
     public Item sample()                     // return (but do not remove) a random item
     {
-        int rndIndex = StdRandom.uniform(rq.length);
+        if(isEmpty()){
+            throw new NoSuchElementException("Deque is empty");
+        }
+        int rndIndex = StdRandom.uniform(size);
         return rq[rndIndex];
     }
     public Iterator<Item> iterator()         // return an independent iterator over items in random order
@@ -86,17 +87,13 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         }
 
         @Override
-        public void remove() {
-            try {
-                throw new OperationNotSupportedException("remove");
-            } catch (OperationNotSupportedException e) {
-                e.printStackTrace();
-            }
+        public void remove(){
+            throw new UnsupportedOperationException("remove");
         }
     }
 
     private void resize(int length){
-        Item[] newRq = (Item[]) (new Object[length]);
+        Item[] newRq = (Item[])(new Object[length]);
         for (int i = 0; i < size; i++){
             newRq[i] = rq[i];
         }
